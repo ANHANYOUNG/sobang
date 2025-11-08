@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <joint name="water_bottle_joint" type="fixed">
+    <parent link="chassis"/>
+    <!-- 라이다(0.122 0 0.212)보다 뒤(-x)·오른쪽(-y)으로 오프셋, 섀시 상판(≈0.128m) 위로 배치 -->
+    <child link="water_bottle_link"/>
+    
+    <origin xyz="0.1 ${chassis_width/3} 0.17" rpy="0 1.5708 0"/>
+  </joint>
+
+  <link name="water_bottle_link">
+    <!-- 시각 모델 -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.033" length="0.21"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+
+    <!-- 충돌 모델 -->
+    <collision>
+      <geometry>
+        <cylinder radius="0.033" length="0.21"/>
+      </geometry>
+    </collision>
+
+    <!-- 관성 (중심: 링크 원점) -->
+    <xacro:inertial_cylinder mass="0" length="0.21" radius="0.033">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:inertial_cylinder>
+  </link>
+
+  <!-- Gazebo용 머티리얼 -->
+  <gazebo reference="water_bottle_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+</robot>
+
+
